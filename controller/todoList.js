@@ -1,8 +1,5 @@
 const todoList = require('../controller/todoList');
 
-//Routing all HTTP requests to /todoList to todoList controller
-//app.use('/todoList',todoList);
-
 //Require the express package and use express.Router()
 const express = require('express');
 const router = express.Router();

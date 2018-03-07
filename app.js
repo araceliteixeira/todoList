@@ -31,7 +31,7 @@ app.get('/', (req,res) => {
     res.send("Invalid page");
 })
 
-//Routing all HTTP requests to /bucketlist to bucketlist controller
+//Routing all HTTP requests to /todoList to todoList controller
 app.use('/todoList',todoList);
 
 //Listen to port 3000
