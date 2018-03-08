@@ -13,5 +13,8 @@
     "body-parser": "~1.17.2"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@angular/cli": "^1.7.3"
+  }
 }
