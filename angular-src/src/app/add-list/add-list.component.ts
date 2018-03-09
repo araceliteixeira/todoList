@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { List } from '../../../../model/List';
+import { ListService } from '../services/list.service';
 
 @Component({
   selector: 'app-add-list',
@@ -6,10 +8,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-list.component.css']
 })
 export class AddListComponent implements OnInit {
+  private newList: List;
+  @Output() addList: EventEmitter<List> = new EventEmitter<List>();
 
-  constructor() { }
+  constructor(private listServ: ListService) { }
 
   ngOnInit() {
+    this.newList = {
+        description: '',
+        isChecked: false,
+        dueDate: '',
+        _id: ''
+
+    };
   }
 
+  public onSubmit() {
+    this.listServ.addList(this.newList).subscribe(
+        response => {
+            console.log(response);
+            if (response.success) {
+              this.addList.emit(this.newList);
+            }
+        },
+    );
+
+    }
 }

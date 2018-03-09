@@ -20,6 +20,16 @@ export class ListService {
             .map(res => <List[]>res.lists);
     }
 
+    public addList(list: List) {
+      const URI = `${this.serverApi}/bucketlist/`;
+      const headers = new Headers;
+      const body = JSON.stringify({description: list.description, isChecked: list.isChecked, dueDate: list.dueDate});
+      console.log(body);
+      headers.append('Content-Type', 'application/json');
+      return this.http.post(URI, body , {headers: headers})
+      .map(res => res.json());
+    }
+
     public deleteList(listId: string) {
       const URI = `${this.serverApi}/todoList/${listId}`;
       const headers = new Headers;

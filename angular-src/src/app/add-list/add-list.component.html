@@ -1,3 +1,17 @@
-<p>
-  add-list works!
-</p>
+<div class="container">
+
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label for="description">Description:</label>
+      <input type="text" [(ngModel)]="newList.description" name="description" required>
+    </div>
+
+    <div>
+      <label for="dueDate">Due Date:</label>
+      <input type="text" [(ngModel)]="newList.dueDate" name="dueDate">
+    </div>
+
+    <button type="submit">Submit</button>
+
+  </form>
+</div>

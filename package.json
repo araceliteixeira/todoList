@@ -4,6 +4,7 @@
   "description": "Simple app to manage a TODO list",
   "main": "app.js",
   "scripts": {
+    "start": "node app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

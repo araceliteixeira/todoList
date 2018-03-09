@@ -9,9 +9,8 @@ const TodoListSchema = Schema({
         required: true
     },
     isChecked: Boolean,
-    date: {
-        type: Date,
-        required: true
+    dueDate: {
+        type: String
     }
 });
 const TodoList = mongoose.model('TodoList', TodoListSchema );
