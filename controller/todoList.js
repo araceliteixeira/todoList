@@ -23,7 +23,7 @@ router.post('/', (req,res,next) => {
     let newList = new list({
         description: req.body.description,
         isChecked: req.body.isChecked,
-        date: req.body.date
+        dueDate: req.body.dueDate
     });
     list.addList(newList,(err, list) => {
         if(err) {

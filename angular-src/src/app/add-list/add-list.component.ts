@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { List } from '../../../../model/List';
+import { List } from '../model/List';
 import { ListService } from '../services/list.service';
 
 @Component({

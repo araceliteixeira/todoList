@@ -6,15 +6,15 @@
         <tr>
           <th>Done</th>
           <th>Description</th>
-          <th>Date</th>
+          <th>Due date</th>
           <th>Delete</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let list of lists">
-          <td>{{list.isChecked}}</td>
+          <td><input type="checkbox" value="{{list.isChecked}}" /></td>
           <td>{{list.description}}</td>
-          <td>{{list.date}}</td>
+          <td>{{list.dueDate}}</td>
           <td><button type="button" (click)="deleteList(list); $event.stopPropagation();">Delete</button></td>
         </tr>
       </tbody>

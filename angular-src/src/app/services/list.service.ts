@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { List } from '../../../../model/List';
+import { List } from '../model/List';
 
 import 'rxjs/add/operator/map';
 
@@ -21,7 +21,7 @@ export class ListService {
     }
 
     public addList(list: List) {
-      const URI = `${this.serverApi}/bucketlist/`;
+      const URI = `${this.serverApi}/todoList/`;
       const headers = new Headers;
       const body = JSON.stringify({description: list.description, isChecked: list.isChecked, dueDate: list.dueDate});
       console.log(body);

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ListService } from '../services/list.service';
-import { List } from '../../../../model/List';
+import { List } from '../model/List';
 
 @Component({
   selector: 'app-view-list',
@@ -9,13 +9,20 @@ import { List } from '../../../../model/List';
 })
 export class ViewListComponent implements OnInit {
 
-  // lists propoerty which is an array of List type
+  // lists property which is an array of List type
   private lists: List[] = [];
+  private stubList: List = {
+    description: 'Test',
+    isChecked: false,
+    dueDate: '00/00/0000',
+    _id: '0'
+
+};
 
   constructor(private listServ: ListService) { }
 
   ngOnInit() {
-
+    this.lists = [this.stubList];
     // Load all list on init
     this.loadLists();
   }
@@ -24,7 +31,7 @@ export class ViewListComponent implements OnInit {
 
     // Get all lists from server and update the lists property
     this.listServ.getAllLists().subscribe(
-        response => this.lists = response, );
+        response => this.lists = response.concat(this.stubList), );
   }
 
   // deleteList. The deleted list is being filtered out using the .filter method
@@ -34,7 +41,8 @@ export class ViewListComponent implements OnInit {
   }
 
   public onAddList(newList) {
-    this.lists = this.lists.concat(newList);
+    // this.lists = this.lists.concat(newList);
+    this.loadLists();
   }
 
 }
