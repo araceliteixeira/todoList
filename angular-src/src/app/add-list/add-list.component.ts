@@ -17,7 +17,7 @@ export class AddListComponent implements OnInit {
     this.newList = {
         description: '',
         isChecked: false,
-        dueDate: '',
+        dueDate: null,
         _id: ''
 
     };

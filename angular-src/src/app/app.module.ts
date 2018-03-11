@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AddListComponent } from './add-list/add-list.component';
 import { ViewListComponent } from './view-list/view-list.component';
 import { ListService } from './services/list.service';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ListService } from './services/list.service';
   imports: [
     BrowserModule,
     HttpModule,
-    FormsModule
+    FormsModule,
+    NgbModule.forRoot()
   ],
   providers: [ListService],
   bootstrap: [AppComponent]

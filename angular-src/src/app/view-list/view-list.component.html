@@ -1,7 +1,4 @@
-<h2> TODO List App </h2>
-
-  <!-- Table starts here -->
-  <table id="table">
+  <table id="table" class="table">
       <thead>
         <tr>
           <th>Done</th>
@@ -12,10 +9,12 @@
       </thead>
       <tbody>
         <tr *ngFor="let list of lists">
-          <td><input type="checkbox" value="{{list.isChecked}}" /></td>
+          <td>
+              <div class="checkbox"><input type="checkbox" value="{{list.isChecked}}" /></div>
+          </td>
           <td>{{list.description}}</td>
-          <td>{{list.dueDate}}</td>
-          <td><button type="button" (click)="deleteList(list); $event.stopPropagation();">Delete</button></td>
+          <td>{{list.dueDate | date: 'MM/d/y h:mm a'}}</td>
+          <td><button type="button" class="btn btn-danger" (click)="deleteList(list); $event.stopPropagation();">Delete</button></td>
         </tr>
       </tbody>
    </table>

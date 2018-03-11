@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { ListService } from '../services/list.service';
 import { List } from '../model/List';
 
@@ -14,7 +15,7 @@ export class ViewListComponent implements OnInit {
   private stubList: List = {
     description: 'Test',
     isChecked: false,
-    dueDate: '00/00/0000',
+    dueDate: null,
     _id: '0'
 
 };
