@@ -13,18 +13,17 @@ export class ViewListComponent implements OnInit {
   // lists property which is an array of List type
   private lists: List[] = [];
   private editing = false;
-  private editList: List;
   private stubList: List = {
-    description: 'Test',
+    description: '',
     isChecked: false,
     dueDate: null,
-    _id: '0'
+    _id: '-1'
   };
+  private editList: List = this.stubList;
 
   constructor(private listServ: ListService) { }
 
   ngOnInit() {
-    this.lists = [this.stubList];
     // Load all list on init
     this.loadLists();
   }
@@ -33,7 +32,7 @@ export class ViewListComponent implements OnInit {
 
     // Get all lists from server and update the lists property
     this.listServ.getAllLists().subscribe(
-        response => this.lists = response.concat(this.stubList), );
+        response => this.lists = response, );
   }
 
   // deleteList. The deleted list is being filtered out using the .filter method
@@ -53,6 +52,7 @@ export class ViewListComponent implements OnInit {
   }
 
   public cancelEditing() {
+    this.editList = this.stubList;
     this.editing = false;
   }
 
@@ -62,6 +62,7 @@ export class ViewListComponent implements OnInit {
       response => {
           console.log(response);
           if (response.success) {
+            this.editList = this.stubList;
             this.loadLists();
           }
       },
