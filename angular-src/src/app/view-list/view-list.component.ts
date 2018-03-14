@@ -12,13 +12,14 @@ export class ViewListComponent implements OnInit {
 
   // lists property which is an array of List type
   private lists: List[] = [];
+  private editing = false;
+  private editList: List;
   private stubList: List = {
     description: 'Test',
     isChecked: false,
     dueDate: null,
     _id: '0'
-
-};
+  };
 
   constructor(private listServ: ListService) { }
 
@@ -46,4 +47,24 @@ export class ViewListComponent implements OnInit {
     this.loadLists();
   }
 
+  public startEditing(list) {
+    this.editList = list;
+    this.editing = true;
+  }
+
+  public cancelEditing() {
+    this.editing = false;
+  }
+
+  public saveEditing() {
+    this.editing = false;
+    this.listServ.editList(this.editList).subscribe(
+      response => {
+          console.log(response);
+          if (response.success) {
+            this.loadLists();
+          }
+      },
+    );
+  }
 }

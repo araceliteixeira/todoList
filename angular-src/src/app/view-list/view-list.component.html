@@ -8,14 +8,28 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let list of lists">
-          <td>
-              <div class="checkbox"><input type="checkbox" value="{{list.isChecked}}" /></div>
-          </td>
-          <td>{{list.description}}</td>
-          <td>{{list.dueDate | date: 'MM/d/y h:mm a'}}</td>
-          <td><button type="button" class="btn btn-danger" (click)="deleteList(list); $event.stopPropagation();">Delete</button></td>
-        </tr>
+        <ng-container *ngFor="let list of lists">
+          <tr *ngIf="editing == false">
+            <td>
+                <div class="checkbox"><input type="checkbox" value="{{list.isChecked}}" /></div>
+            </td>
+            <td (click)="startEditing(list)">{{list.description}}</td>
+            <td (click)="startEditing(list)">{{list.dueDate | date: 'MM/d/y h:mm a'}}</td>
+            <td><button type="button" class="btn btn-danger" (click)="deleteList(list); $event.stopPropagation();">Delete</button></td>
+          </tr>
+          <tr *ngIf="editing == true">
+            <td colspan="4">
+              <form>
+                <label>Description:</label>
+                <input type="text" [(ngModel)]="editList.description" name="description" required>
+                <label>Due date:</label>
+                <input type="datetime-local" [(ngModel)]="editList.dueDate" name="dueDate">
+                <input type="button" (click)="cancelEditing()" value="Cancel">
+                <input type="button" (click)="saveEditing()" value="Save">
+              </form>
+            </td>
+          </tr>
+      </ng-container>
       </tbody>
    </table>
 
