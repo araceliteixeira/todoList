@@ -14,7 +14,7 @@
                 <div class="checkbox"><input type="checkbox" [checked]="list.isChecked" (click)="onChangeCheckbox(list)" /></div>
             </td>
             <td (click)="startEditing(list); $event.stopPropagation();">{{list.description}}</td>
-            <td (click)="startEditing(list); $event.stopPropagation();">{{list.dueDate | date: 'MM/d/y h:mm a'}}</td>
+            <td (click)="startEditing(list); $event.stopPropagation();">{{list.dueDate | date: 'MM/dd/y HH:mm'}}</td>
             <td><button type="button" class="btn btn-danger" (click)="deleteList(list); $event.stopPropagation();">Delete</button></td>
           </tr>
           <tr *ngIf="editing == true && editList._id == list._id">
@@ -24,7 +24,8 @@
                 <label>Description:</label>
                 <input type="text" [(ngModel)]="editList.description" name="description" required>
                 <label>Due date:</label>
-                <input type="datetime-local" [(ngModel)]="editList.dueDate" name="dueDate">
+                <input type="datetime-local" [ngModel]="editList.dueDate | date:'yyyy-MM-ddTHH:mm'"
+                  (ngModelChange)="editList.dueDate = $event"  name="dueDate">
                 <input type="button" class="btn btn-info" (click)="cancelEditing(); $event.stopPropagation();" value="Cancel">
                 <input type="button" class="btn btn-warning" (click)="saveEditing(); $event.stopPropagation();" value="Save">
               </form>
