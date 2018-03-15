@@ -11,7 +11,7 @@
         <ng-container *ngFor="let list of lists">
           <tr *ngIf="!editing || editList._id != list._id">
             <td>
-                <div class="checkbox"><input type="checkbox" value="{{list.isChecked}}" /></div>
+                <div class="checkbox"><input type="checkbox" [checked]="list.isChecked" (click)="onChangeCheckbox(list)" /></div>
             </td>
             <td (click)="startEditing(list); $event.stopPropagation();">{{list.description}}</td>
             <td (click)="startEditing(list); $event.stopPropagation();">{{list.dueDate | date: 'MM/d/y h:mm a'}}</td>
@@ -25,8 +25,8 @@
                 <input type="text" [(ngModel)]="editList.description" name="description" required>
                 <label>Due date:</label>
                 <input type="datetime-local" [(ngModel)]="editList.dueDate" name="dueDate">
-                <input type="button" (click)="cancelEditing(); $event.stopPropagation();" value="Cancel">
-                <input type="button" (click)="saveEditing(); $event.stopPropagation();" value="Save">
+                <input type="button" class="btn btn-info" (click)="cancelEditing(); $event.stopPropagation();" value="Cancel">
+                <input type="button" class="btn btn-warning" (click)="saveEditing(); $event.stopPropagation();" value="Save">
               </form>
             </td>
           </tr>

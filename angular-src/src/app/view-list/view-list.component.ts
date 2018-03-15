@@ -46,6 +46,18 @@ export class ViewListComponent implements OnInit {
     this.loadLists();
   }
 
+  public onChangeCheckbox(list) {
+    list.isChecked = !list.isChecked;
+    this.listServ.editList(list).subscribe(
+      response => {
+          console.log(response);
+          if (response.success) {
+            this.loadLists();
+          }
+      },
+    );
+  }
+
   public startEditing(list) {
     this.editList = list;
     this.editing = true;
