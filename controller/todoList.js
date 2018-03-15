@@ -53,4 +53,23 @@ router.delete('/:id', (req,res,next)=> {
     })
 });
 
+//PUT HTTP method to /todoList
+router.put('/', (req,res,next) => {
+    let editList = new list({
+        _id: req.body._id,
+        description: req.body.description,
+        isChecked: req.body.isChecked,
+        dueDate: req.body.dueDate
+    });
+    list.editList(editList,(err, list) => {
+        if(err) {
+            res.json({success: false, message: `Failed to update the list. Error: ${err}`});
+
+        }
+        else
+            res.json({success:true, message: "Edited successfully."});
+
+    });
+});
+
 module.exports = router;

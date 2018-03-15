@@ -45,7 +45,7 @@ export class ListService {
         const body = JSON.stringify({_id: list._id, description: list.description, isChecked: list.isChecked, dueDate: list.dueDate});
         console.log(body);
         headers.append('Content-Type', 'application/json');
-        return this.http.post(URI, body , {headers: headers})
+        return this.http.put(URI, body , {headers: headers})
         .map(res => res.json());
     }
 }

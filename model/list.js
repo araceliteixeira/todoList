@@ -31,3 +31,8 @@ module.exports.deleteListById = (id, callback) => {
     let query = {_id: id};
     TodoList.remove(query, callback);
 }
+
+//Update the list fields
+module.exports.editList = (editList, callback) => {
+    TodoList.findByIdAndUpdate(editList._id, editList, callback);
+}

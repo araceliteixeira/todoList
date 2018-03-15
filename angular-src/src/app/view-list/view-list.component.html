@@ -18,9 +18,7 @@
             <td><button type="button" class="btn btn-danger" (click)="deleteList(list); $event.stopPropagation();">Delete</button></td>
           </tr>
           <tr *ngIf="editing == true && editList._id == list._id">
-            <td>
-              <div class="checkbox"><input type="checkbox" value="{{editList.isChecked}}" /></div>
-            </td>
+            <td></td>
             <td colspan="3">
               <form>
                 <label>Description:</label>
