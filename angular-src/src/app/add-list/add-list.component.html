@@ -1,5 +1,7 @@
 <div class="container">
-
+  <h3>
+        Add new task:
+  </h3>
   <form (ngSubmit)="onSubmit()">
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -12,7 +14,7 @@
           <input type="datetime-local" class="form-control" [(ngModel)]="newList.dueDate" name="dueDate">
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Add</button>
 
   </form>
 </div>

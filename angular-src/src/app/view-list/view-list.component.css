@@ -6,6 +6,18 @@
     width: 15%;
 }
 
+.col20 {
+    width: 20%;
+}
+
 .col35 {
     width: 35%;
+}
+
+.col45 {
+    width: 45%;
+}
+
+.center, #table tr td:first-child, #table tr td:last-child {
+    text-align: center;
 }

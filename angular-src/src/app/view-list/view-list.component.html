@@ -1,10 +1,10 @@
   <table id="table" class="table">
       <thead>
         <tr>
-          <th class="col5">Done</th>
+          <th class="col5 center">Done</th>
           <th class="col35">Description</th>
           <th class="col15">Due date</th>
-          <th class="col5">Delete</th>
+          <th class="col5 center">Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -13,21 +13,20 @@
             <td>
                 <div class="checkbox"><input type="checkbox" [checked]="list.isChecked" (click)="onChangeCheckbox(list)" /></div>
             </td>
-            <td (click)="startEditing(list); $event.stopPropagation();">{{list.description}}</td>
-            <td (click)="startEditing(list); $event.stopPropagation();">{{list.dueDate | date: 'MM/dd/y HH:mm'}}</td>
-            <td><button type="button" class="btn btn-danger" (click)="deleteList(list); $event.stopPropagation();">Delete</button></td>
+            <td (click)="startEditing(list)">{{list.description}}</td>
+            <td (click)="startEditing(list)">{{list.dueDate | date: 'MM/dd/y HH:mm'}}</td>
+            <td><button type="button" class="btn btn-danger" (click)="deleteList(list)">Delete</button></td>
           </tr>
           <tr *ngIf="editing == true && editList._id == list._id">
-            <td></td>
-            <td colspan="3">
-              <form>
-                <label>Description:</label>
-                <input type="text" [(ngModel)]="editList.description" name="description" required>
-                <label>Due date:</label>
-                <input type="datetime-local" [ngModel]="editList.dueDate | date:'yyyy-MM-ddTHH:mm'"
-                  (ngModelChange)="editList.dueDate = $event"  name="dueDate">
-                <input type="button" class="btn btn-info" (click)="cancelEditing(); $event.stopPropagation();" value="Cancel">
-                <input type="button" class="btn btn-warning" (click)="saveEditing(); $event.stopPropagation();" value="Save">
+            <td colspan="4">
+              <form class="form-inline">
+                  <label class="mr-3">Description:</label>
+                  <input type="text" class="form-control mr-3 col45" [(ngModel)]="editList.description" name="description" required>
+                  <label class="mr-3">Due date:</label>
+                  <input type="datetime-local" class="form-control mr-3 col20" [ngModel]="editList.dueDate | date:'yyyy-MM-ddTHH:mm'"
+                    (ngModelChange)="editList.dueDate = $event"  name="dueDate">
+                  <input type="button" class="btn btn-info mr-3" (click)="cancelEditing()" value="Cancel">
+                  <input type="button" class="btn btn-warning" (click)="saveEditing()" value="Save">
               </form>
             </td>
           </tr>
