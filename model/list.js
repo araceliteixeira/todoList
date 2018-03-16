@@ -18,7 +18,7 @@ module.exports = TodoList;
 
 //TodoList.find() returns all the lists
 module.exports.getAllLists = (callback) => {
-    TodoList.find(callback);
+    TodoList.find(callback).sort('dueDate');
 }
 
 //newList.save is used to insert the document into MongoDB
