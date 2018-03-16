@@ -3,8 +3,9 @@
         <tr>
           <th class="col5 center">Done</th>
           <th class="col35">Description</th>
-          <th class="col15">Due date</th>
-          <th class="col5 center">Delete</th>
+          <th class="col15">Due Date</th>
+          <th class="col10">Due Time</th>
+          <th class="col15 center">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -13,21 +14,28 @@
             <td>
                 <div class="checkbox"><input type="checkbox" [checked]="list.isChecked" (click)="onChangeCheckbox(list)" /></div>
             </td>
-            <td (click)="startEditing(list)">{{list.description}}</td>
-            <td (click)="startEditing(list)">{{list.dueDate | date: 'MM/dd/y HH:mm'}}</td>
+            <td *ngIf="!list.isChecked" (click)="startEditing(list)">{{list.description}}</td>
+            <td *ngIf="list.isChecked" (click)="startEditing(list)"><s>{{list.description}}</s></td>
+            <td (click)="startEditing(list)">{{list.dueDate | date: 'MM/dd/y'}}</td>
+            <td (click)="startEditing(list)">{{list.dueDate | date: 'HH:mm'}}</td>
             <td><button type="button" class="btn btn-danger" (click)="deleteList(list)">Delete</button></td>
           </tr>
           <tr *ngIf="editing == true && editList._id == list._id">
-            <td colspan="4">
-              <form class="form-inline">
-                  <label class="mr-3">Description:</label>
-                  <input type="text" class="form-control mr-3 col45" [(ngModel)]="editList.description" name="description" required>
-                  <label class="mr-3">Due date:</label>
-                  <input type="datetime-local" class="form-control mr-3 col20" [ngModel]="editList.dueDate | date:'yyyy-MM-ddTHH:mm'"
-                    (ngModelChange)="editList.dueDate = $event"  name="dueDate">
-                  <input type="button" class="btn btn-info mr-3" (click)="cancelEditing()" value="Cancel">
-                  <input type="button" class="btn btn-warning" (click)="saveEditing()" value="Save">
-              </form>
+            <td></td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="editList.description" name="description" required>
+            </td>
+            <td>
+              <input type="date" class="form-control" [ngModel]="editDate | date:'yyyy-MM-dd'"
+                (ngModelChange)="editDate = $event"  name="dueDate">
+            </td>
+            <td>
+              <input type="time" class="form-control" [ngModel]="editTime | date:'HH:mm'"
+                (ngModelChange)="editTime = $event"  name="dueTime">
+            </td>
+            <td>
+              <input type="button" class="btn btn-info mr-2" (click)="cancelEditing()" value="Cancel">
+              <input type="button" class="btn btn-warning" (click)="saveEditing()" value="Save">
             </td>
           </tr>
       </ng-container>

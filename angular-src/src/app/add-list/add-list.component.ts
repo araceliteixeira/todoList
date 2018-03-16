@@ -37,16 +37,18 @@ export class AddListComponent implements OnInit {
       return;
     }
     if (this.dueDate != null) {
-      this.newList.dueDate = this.dueDate;
+      this.newList.dueDate = new Date(this.dueDate);
 
       if (this.dueTime == null) {
         this.dueTime = new Date();
         this.dueTime.setHours(23, 59);
+      } else {
+        this.dueTime = new Date(this.dueTime);
       }
 
       this.newList.dueDate.setHours(this.dueTime.getHours(), this.dueTime.getMinutes());
     } else if (this.dueTime != null) {
-      this.newList.dueDate = this.dueTime;
+      this.newList.dueDate = new Date(this.dueTime);
     }
     if (this.newList.dueDate != null && this.newList.dueDate < new Date()) {
       alert('Due date/time can\'t be in the past.');

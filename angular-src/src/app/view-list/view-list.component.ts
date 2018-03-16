@@ -20,6 +20,8 @@ export class ViewListComponent implements OnInit {
     _id: '-1'
   };
   private editList: List = this.stubList;
+  private editDate: Date = new Date();
+  private editTime: Date = new Date();
 
   constructor(private listServ: ListService) { }
 
@@ -60,6 +62,8 @@ export class ViewListComponent implements OnInit {
 
   public startEditing(list) {
     this.editList = list;
+    this.editDate = list.dueDate;
+    this.editTime = list.dueDate;
     this.editing = true;
   }
 
@@ -69,15 +73,38 @@ export class ViewListComponent implements OnInit {
   }
 
   public saveEditing() {
-    this.editing = false;
-    this.listServ.editList(this.editList).subscribe(
-      response => {
-          console.log(response);
-          if (response.success) {
-            this.editList = this.stubList;
-            this.loadLists();
-          }
-      },
-    );
+    console.log(this.editDate);
+    console.log(this.editTime);
+    if (this.editList.description === '') {
+      alert('Description must not be empty.');
+      return;
+    }
+    if (this.editDate != null) {
+      this.editList.dueDate = new Date(this.editDate);
+
+      if (this.editTime == null) {
+        this.editTime = new Date();
+        this.editTime.setHours(23, 59);
+      } else {
+        this.editTime = new Date(this.editTime);
+      }
+      this.editList.dueDate.setHours(this.editTime.getHours(), this.editTime.getMinutes());
+    } else if (this.editTime != null) {
+      this.editList.dueDate = new Date(this.editTime);
+    }
+    if (this.editList.dueDate != null && this.editList.dueDate < new Date()) {
+      alert('Due date/time can\'t be in the past.');
+    } else {
+      this.editing = false;
+      this.listServ.editList(this.editList).subscribe(
+        response => {
+            console.log(response);
+            if (response.success) {
+              this.editList = this.stubList;
+              this.loadLists();
+            }
+        },
+      );
+    }
   }
 }
