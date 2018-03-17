@@ -23,15 +23,15 @@
           <tr *ngIf="editing == true && editList._id == list._id">
             <td></td>
             <td>
-              <input type="text" class="form-control" [(ngModel)]="editList.description" name="description" required>
+              <input type="text" maxlength="50" class="form-control" [(ngModel)]="editList.description" name="description" required>
             </td>
             <td>
               <input type="date" class="form-control" [ngModel]="editDate | date:'yyyy-MM-dd'"
-                (ngModelChange)="editDate = $event"  name="dueDate">
+                (ngModelChange)="parseDueDate($event)"  name="dueDate">
             </td>
             <td>
               <input type="time" class="form-control" [ngModel]="editTime | date:'HH:mm'"
-                (ngModelChange)="editTime = $event"  name="dueTime">
+                (ngModelChange)="parseDueTime($event)"  name="dueTime">
             </td>
             <td>
               <input type="button" class="btn btn-info mr-2" (click)="cancelEditing()" value="Cancel">
@@ -43,3 +43,18 @@
    </table>
 
    <app-add-list (addList)='onAddList($event)'> </app-add-list>
+
+   <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Invalid Input</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{ message }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+      </div>
+    </ng-template>

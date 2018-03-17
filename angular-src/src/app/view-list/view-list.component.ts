@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ListService } from '../services/list.service';
 import { List } from '../model/List';
+import { ViewChild } from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-view-list',
@@ -9,7 +11,7 @@ import { List } from '../model/List';
   styleUrls: ['./view-list.component.css']
 })
 export class ViewListComponent implements OnInit {
-
+  @ViewChild('content') private content;
   // lists property which is an array of List type
   private lists: List[] = [];
   private editing = false;
@@ -22,8 +24,9 @@ export class ViewListComponent implements OnInit {
   private editList: List = this.stubList;
   private editDate: Date = new Date();
   private editTime: Date = new Date();
+  private message: String = '';
 
-  constructor(private listServ: ListService) { }
+  constructor(private listServ: ListService, private modalService: NgbModal) { }
 
   ngOnInit() {
     // Load all list on init
@@ -35,6 +38,15 @@ export class ViewListComponent implements OnInit {
     // Get all lists from server and update the lists property
     this.listServ.getAllLists().subscribe(
         response => this.lists = response, );
+  }
+
+  public open(content) {
+    this.modalService.open(content);
+  }
+
+  private showMessage(message) {
+    this.message = message;
+    this.open(this.content);
   }
 
   // deleteList. The deleted list is being filtered out using the .filter method
@@ -72,13 +84,31 @@ export class ViewListComponent implements OnInit {
     this.editing = false;
   }
 
+  parseDueDate(str) {
+    if (str != null && str !== '') {
+      const dsplit = str.toString().split('-');
+      this.editDate = new Date(Number(dsplit[0]), Number(dsplit[1]) - 1, Number(dsplit[2]));
+    } else {
+      this.editDate = null;
+    }
+  }
+
+  parseDueTime(str) {
+    if (str != null && str !== '') {
+      const hsplit = str.toString().split(':');
+      this.editTime = new Date();
+      this.editTime.setHours(Number(hsplit[0]), Number(hsplit[1]));
+    } else {
+      this.editTime = null;
+    }
+  }
+
   public saveEditing() {
-    console.log(this.editDate);
-    console.log(this.editTime);
     if (this.editList.description === '') {
-      alert('Description must not be empty.');
+      this.showMessage('Description must not be empty.');
       return;
     }
+
     if (this.editDate != null) {
       this.editList.dueDate = new Date(this.editDate);
 
@@ -88,23 +118,32 @@ export class ViewListComponent implements OnInit {
       } else {
         this.editTime = new Date(this.editTime);
       }
+
       this.editList.dueDate.setHours(this.editTime.getHours(), this.editTime.getMinutes());
+
     } else if (this.editTime != null) {
-      this.editList.dueDate = new Date(this.editTime);
-    }
-    if (this.editList.dueDate != null && this.editList.dueDate < new Date()) {
-      alert('Due date/time can\'t be in the past.');
+      this.editTime = new Date(this.editTime);
+      this.editList.dueDate = new Date();
+      this.editList.dueDate.setHours(this.editTime.getHours(), this.editTime.getMinutes());
+
     } else {
-      this.editing = false;
-      this.listServ.editList(this.editList).subscribe(
-        response => {
-            console.log(response);
-            if (response.success) {
-              this.editList = this.stubList;
-              this.loadLists();
-            }
-        },
-      );
+      this.editList.dueDate = null;
     }
+
+    if (this.editList.dueDate != null && this.editList.dueDate < new Date()) {
+      this.showMessage('Due date/time can\'t be in the past.');
+      return;
+    }
+
+    this.editing = false;
+    this.listServ.editList(this.editList).subscribe(
+      response => {
+          console.log(response);
+          if (response.success) {
+            this.editList = this.stubList;
+            this.loadLists();
+          }
+      },
+    );
   }
 }
